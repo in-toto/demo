@@ -15,6 +15,7 @@ as the client who verifies the final product.
 
 ### Download and setup in-toto on *NIX (Linux, OS X, ..)
 __Virtual Environments (optional)__
+
 We highly recommend to install `in-toto` and its dependencies in a [`virtualenv`](https://virtualenv.pypa.io/en/stable/). Just copy-paste the following snippet to install
 [`virtualenvwrapper`](https://virtualenvwrapper.readthedocs.io/en/latest/) and create a virtual environment:
 
@@ -29,25 +30,24 @@ mkdir -p ~/.virtualenvs
 source /usr/local/bin/virtualenvwrapper.sh
 
 # Create and change into a virtual environment, e.g. "in-toto-demo"
-# This will add the prefix "(in-toto-demo)"" to your shell prompt
+# This will add the prefix "(in-toto-demo)" to your shell prompt
 mkvirtualenv in-toto-demo
 ```
 
-__Get in-toto__
+__Get demo files and install in-toto__
 ```shell
-# Make sure you have git, python and pip installed on your system
-# and get in-toto
-git clone https://github.com/in-toto/in-toto.git
+# Fetch the demo repo using git
+git clone https://github.com/in-toto/demo.git
 
-# Change into project root directory
-cd in-toto
-
-# Install with pip in "develop mode"
-pip install -e .
-
-# Change into the demo directoy and you are ready to start
+# Change into the demo directory
 cd demo
+
+# Install a compatible version of in-toto
+pip install -r requirements.txt
 ```
+*Note: If you are having troubles installing in-toto, make sure you have
+all the [dependencies installed on your system](https://github.com/in-toto/in-toto#install-dependencies).*
+
 Inside the demo directory you will find four directories: `owner_alice`,
 `functionary_bob`, `functionary_carl` and `final_product`. Alice, Bob and Carl
 already have RSA keys in each of their directories. This is what you see:
