@@ -19,15 +19,15 @@ def main():
       "steps": [{
           "name": "clone",
           "expected_materials": [],
-          "expected_products": [["CREATE", "demo-project/foo.py"]],
+          "expected_products": [["CREATE", "demo-project/foo.py"], ["DISALLOW", "*"]],
           "pubkeys": [key_bob["keyid"]],
           "expected_command": "git clone https://github.com/in-toto/demo-project.git",
           "threshold": 1,
         },{
           "name": "update-version",
           "expected_materials": [["MATCH", "demo-project/*", "WITH", "PRODUCTS",
-                                "FROM", "clone"]],
-          "expected_products": [["ALLOW", "demo-project/foo.py"]],
+                                "FROM", "clone"], ["DISALLOW", "*"]],
+          "expected_products": [["ALLOW", "demo-project/foo.py"], ["DISALLOW", "*"]],
           "pubkeys": [key_bob["keyid"]],
           "expected_command": "",
           "threshold": 1,
@@ -35,10 +35,10 @@ def main():
           "name": "package",
           "expected_materials": [
             ["MATCH", "demo-project/*", "WITH", "PRODUCTS", "FROM",
-             "update-version"],
+             "update-version"], ["DISALLOW", "*"],
           ],
           "expected_products": [
-              ["CREATE", "demo-project.tar.gz"],
+              ["CREATE", "demo-project.tar.gz"], ["DISALLOW", "*"],
           ],
           "pubkeys": [key_carl["keyid"]],
           "expected_command": "tar --exclude '.git' -zcvf demo-project.tar.gz demo-project",
@@ -54,6 +54,7 @@ def main():
               ["ALLOW", ".keep"],
               ["ALLOW", "alice.pub"],
               ["ALLOW", "root.layout"],
+              ["DISALLOW", "*"]
           ],
           "expected_products": [
               ["MATCH", "demo-project/foo.py", "WITH", "PRODUCTS", "FROM", "update-version"],
@@ -63,6 +64,7 @@ def main():
               ["ALLOW", ".keep"],
               ["ALLOW", "alice.pub"],
               ["ALLOW", "root.layout"],
+              ["DISALLOW", "*"]
           ],
           "run": "tar xzf demo-project.tar.gz",
         }],
