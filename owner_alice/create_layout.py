@@ -1,5 +1,6 @@
 from in_toto.util import import_rsa_key_from_file
 from in_toto.models.layout import Layout
+from in_toto.models.metadata import Metablock
 
 def main():
   # Load Alice's private key to later sign the layout
@@ -10,7 +11,6 @@ def main():
   key_carl = import_rsa_key_from_file("../functionary_carl/carl.pub")
 
   layout = Layout.read({
-    "signed": {
       "_type": "layout",
       "keys": {
           key_bob["keyid"]: key_bob,
@@ -68,13 +68,13 @@ def main():
           ],
           "run": "tar xzf demo-project.tar.gz",
         }],
-    },
-    "signatures": []
   })
 
-  # Sign and dump layout to "layout.root"
-  layout.sign(key_alice)
-  layout.dump()
+  metadata = Metablock(signed=layout)
+
+  # Sign and dump layout to "root.layout"
+  metadata.sign(key_alice)
+  metadata.dump("root.layout")
 
 if __name__ == '__main__':
   main()
