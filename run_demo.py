@@ -65,7 +65,7 @@ def supply_chain():
   package_cmd = ("in-toto-run"
                  " --step-name package --materials demo-project/foo.py"
                  " --products demo-project.tar.gz"
-                 " --key carl --record-byproducts"
+                 " --key carl --record-streams"
                  " -- tar --exclude '.git' -zcvf demo-project.tar.gz demo-project")
   print package_cmd
   subprocess.call(shlex.split(package_cmd))
@@ -105,7 +105,7 @@ def supply_chain():
   package_cmd = ("in-toto-run"
                  " --step-name package --materials demo-project/foo.py"
                  " --products demo-project.tar.gz"
-                 " --key carl --record-byproducts"
+                 " --key carl --record-streams"
                  " -- tar --exclude '.git' -zcvf demo-project.tar.gz demo-project")
   print package_cmd
   subprocess.call(shlex.split(package_cmd))
