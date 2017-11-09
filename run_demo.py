@@ -74,9 +74,9 @@ def supply_chain():
   prompt_key("Create final product")
   os.chdir("..")
   copyfile("owner_alice/root.layout", "final_product/root.layout")
-  copyfile("functionary_bob/clone.0c6c50a1.link", "final_product/clone.0c6c50a1.link")
-  copyfile("functionary_bob/update-version.0c6c50a1.link", "final_product/update-version.0c6c50a1.link")
-  copyfile("functionary_carl/package.c1ae1e51.link", "final_product/package.c1ae1e51.link")
+  copyfile("functionary_bob/clone.776a00e2.link", "final_product/clone.776a00e2.link")
+  copyfile("functionary_bob/update-version.776a00e2.link", "final_product/update-version.776a00e2.link")
+  copyfile("functionary_carl/package.2f89b927.link", "final_product/package.2f89b927.link")
   copyfile("functionary_carl/demo-project.tar.gz", "final_product/demo-project.tar.gz")
 
 
@@ -114,9 +114,9 @@ def supply_chain():
   prompt_key("Create final product")
   os.chdir("..")
   copyfile("owner_alice/root.layout", "final_product/root.layout")
-  copyfile("functionary_bob/clone.0c6c50a1.link", "final_product/clone.0c6c50a1.link")
-  copyfile("functionary_bob/update-version.0c6c50a1.link", "final_product/update-version.0c6c50a1.link")
-  copyfile("functionary_carl/package.c1ae1e51.link", "final_product/package.c1ae1e51.link")
+  copyfile("functionary_bob/clone.776a00e2.link", "final_product/clone.776a00e2.link")
+  copyfile("functionary_bob/update-version.776a00e2.link", "final_product/update-version.776a00e2.link")
+  copyfile("functionary_carl/package.2f89b927.link", "final_product/package.2f89b927.link")
   copyfile("functionary_carl/demo-project.tar.gz", "final_product/demo-project.tar.gz")
 
 
@@ -143,17 +143,17 @@ def main():
   if args.clean:
     files_to_delete = [
       "owner_alice/root.layout",
-      "functionary_bob/clone.0c6c50a1.link",
-      "functionary_bob/update-version.0c6c50a1.link",
+      "functionary_bob/clone.776a00e2.link",
+      "functionary_bob/update-version.776a00e2.link",
       "functionary_bob/demo-project",
-      "functionary_carl/package.c1ae1e51.link",
+      "functionary_carl/package.2f89b927.link",
       "functionary_carl/demo-project.tar.gz",
       "functionary_carl/demo-project",
       "final_product/alice.pub",
       "final_product/demo-project.tar.gz",
-      "final_product/package.c1ae1e51.link",
-      "final_product/clone.0c6c50a1.link",
-      "final_product/update-version.0c6c50a1.link",
+      "final_product/package.2f89b927.link",
+      "final_product/clone.776a00e2.link",
+      "final_product/update-version.776a00e2.link",
       "final_product/untar.link",
       "final_product/root.layout",
       "final_product/demo-project",
