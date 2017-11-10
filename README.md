@@ -163,7 +163,7 @@ our software package `demo-project.tar.gz` and the related metadata files `root.
 `clone.[Bob's keyid].link`, `update-version.[Bob's keyid].link` and `package.[Carl's keyid].link`:
 ```shell
 cd ..
-cp owner_alice/root.layout functionary_bob/clone.0c6c50a1.link functionary_bob/update-version.0c6c50a1.link functionary_carl/package.c1ae1e51.link functionary_carl/demo-project.tar.gz final_product/
+cp owner_alice/root.layout functionary_bob/clone.776a00e2.link functionary_bob/update-version.776a00e2.link functionary_carl/package.2f89b927.link functionary_carl/demo-project.tar.gz final_product/
 ```
 And now run verification on behalf of the client:
 ```shell
@@ -209,7 +209,7 @@ in-toto-run --step-name package --materials demo-project/foo.py --products demo-
 and ships everything out as final product to the client:
 ```shell
 cd ..
-cp owner_alice/root.layout functionary_bob/clone.0c6c50a1.link functionary_bob/update-version.0c6c50a1.link functionary_carl/package.c1ae1e51.link functionary_carl/demo-project.tar.gz final_product/
+cp owner_alice/root.layout functionary_bob/clone.776a00e2.link functionary_bob/update-version.776a00e2.link functionary_carl/package.2f89b927.link functionary_carl/demo-project.tar.gz final_product/
 ```
 
 ### Verifying the malicious product

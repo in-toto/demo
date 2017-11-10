@@ -1,1 +1,1 @@
--e git://github.com/in-toto/in-toto.git@d91c5661313d38bee9a283e65508937bf0f20fa8#egg=in-toto
+in-toto==0.1.1
