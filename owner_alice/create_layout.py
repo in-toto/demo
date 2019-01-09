@@ -47,8 +47,11 @@ def main():
           "pubkeys": [key_carl["keyid"]],
           "expected_command": [
               "tar",
-              "--exclude '.git'"
-              "-zcvf demo-project.tar.gz demo-project",
+              "--exclude",
+              ".git",
+              "-zcvf",
+              "demo-project.tar.gz",
+              "demo-project",
           ],
           "threshold": 1,
         }],
