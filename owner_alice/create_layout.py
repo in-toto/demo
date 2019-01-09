@@ -21,7 +21,11 @@ def main():
           "expected_materials": [],
           "expected_products": [["CREATE", "demo-project/foo.py"], ["DISALLOW", "*"]],
           "pubkeys": [key_bob["keyid"]],
-          "expected_command": "git clone https://github.com/in-toto/demo-project.git",
+          "expected_command": [
+              "git",
+              "clone",
+              "https://github.com/in-toto/demo-project.git"
+          ],
           "threshold": 1,
         },{
           "name": "update-version",
@@ -29,7 +33,7 @@ def main():
                                 "FROM", "clone"], ["DISALLOW", "*"]],
           "expected_products": [["ALLOW", "demo-project/foo.py"], ["DISALLOW", "*"]],
           "pubkeys": [key_bob["keyid"]],
-          "expected_command": "",
+          "expected_command": [],
           "threshold": 1,
         },{
           "name": "package",
@@ -41,7 +45,14 @@ def main():
               ["CREATE", "demo-project.tar.gz"], ["DISALLOW", "*"],
           ],
           "pubkeys": [key_carl["keyid"]],
-          "expected_command": "tar --exclude '.git' -zcvf demo-project.tar.gz demo-project",
+          "expected_command": [
+              "tar",
+              "--exclude",
+              ".git",
+              "-zcvf",
+              "demo-project.tar.gz",
+              "demo-project",
+          ],
           "threshold": 1,
         }],
       "inspect": [{
@@ -66,7 +77,11 @@ def main():
               ["ALLOW", "root.layout"],
               ["DISALLOW", "*"]
           ],
-          "run": "tar xzf demo-project.tar.gz",
+          "run": [
+              "tar",
+              "xzf",
+              "demo-project.tar.gz",
+          ]
         }],
   })
 

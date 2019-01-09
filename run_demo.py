@@ -37,9 +37,9 @@ def supply_chain():
 
   prompt_key("Update version number (Bob)")
   update_version_start_cmd = ("in-toto-record"
+                    " start"
                     " --step-name update-version"
                     " --key bob"
-                    " start"
                     " --materials demo-project/foo.py")
 
   print update_version_start_cmd
@@ -50,9 +50,9 @@ def supply_chain():
   subprocess.call(update_version, shell=True)
 
   update_version_stop_cmd = ("in-toto-record"
+                    " stop"
                     " --step-name update-version"
                     " --key bob"
-                    " stop"
                     " --products demo-project/foo.py")
 
   print update_version_stop_cmd
