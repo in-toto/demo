@@ -119,7 +119,7 @@ So first Bob records the state of the files he will modify:
 
 ```shell
 # In functionary_bob directory
-in-toto-record --step-name update-version --key bob start --materials demo-project/foo.py
+in-toto-record start --step-name update-version --key bob --materials demo-project/foo.py
 ```
 
 Then Bob uses an editor of his choice to update the version number in `demo-project/foo.py`, e.g.:
@@ -133,7 +133,7 @@ And finally he records the state of files after the modification and produces
 a link metadata file called `update-version.[Bob's keyid].link`.
 ```shell
 # In functionary_bob directory
-in-toto-record --step-name update-version --key bob stop --products demo-project/foo.py
+in-toto-record stop --step-name update-version --key bob --products demo-project/foo.py
 ```
 
 Bob has done his work and can send over the sources to Carl, who will create
