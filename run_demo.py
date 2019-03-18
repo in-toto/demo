@@ -6,6 +6,11 @@ import argparse
 import time
 from shutil import copyfile, copytree, rmtree
 
+try:
+  input = raw_input
+except NameError:
+  pass
+
 NO_PROMPT = False
 
 def prompt_key(prompt):
@@ -15,7 +20,7 @@ def prompt_key(prompt):
   inp = False
   while inp != "":
     try:
-      inp = raw_input("\n{} -- press any key to continue".format(prompt))
+      inp = input("\n{} -- press any key to continue".format(prompt))
     except Exception:
       pass
 
