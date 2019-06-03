@@ -50,6 +50,8 @@ source /anaconda/bin/virtualenvwrapper.sh
 conda create --name in-toto-demo
 ```
 
+The environment can be started with `source activate in-toto-demo`.
+
 __Get demo files and install in-toto__
 ```shell
 # Fetch the demo repo using git
