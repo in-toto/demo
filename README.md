@@ -34,6 +34,22 @@ source /usr/local/bin/virtualenvwrapper.sh
 mkvirtualenv in-toto-demo
 ```
 
+__Virtual Environments with Conda (optional)__
+
+You may use [Conda](https://conda.io/en/latest/) instead of virtualenv, which comes from the [Anaconda](https://www.anaconda.com/) package manager. 
+
+```shell
+# Install virtualenvwrapper
+pip install virtualenvwrapper
+
+# Source the scripts (you may want to add this to your shell startup file)
+source /anaconda/bin/virtualenvwrapper.sh 
+
+# Create and change into a virtual environment, e.g. "in-toto-demo"
+# This will add the prefix "(in-toto-demo)" to your shell prompt
+conda create --name in-toto-demo
+```
+
 __Get demo files and install in-toto__
 ```shell
 # Fetch the demo repo using git
