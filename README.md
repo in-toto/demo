@@ -36,7 +36,7 @@ mkvirtualenv in-toto-demo
 
 __Virtual Environments with Conda (optional)__
 
-You may use [Conda](https://conda.io/en/latest/) instead of virtualenv, which comes from the [Anaconda](https://www.anaconda.com/) package manager. 
+You may use [Conda](https://conda.io/en/latest/) instead of virtualenv, which comes from the [Anaconda](https://www.anaconda.com/) package manager. After installing Anaconda, copy and paste the following to create a virtual environment:
 
 ```shell
 # Install virtualenvwrapper
