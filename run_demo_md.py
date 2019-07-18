@@ -63,7 +63,15 @@ EXPECTED_STDOUT = \
 + cp owner_alice/root.layout functionary_bob/clone.776a00e2.link functionary_bob/update-version.776a00e2.link functionary_carl/package.2f89b927.link functionary_carl/demo-project.tar.gz final_product/
 + cd final_product
 + in-toto-verify --layout root.layout --layout-key alice.pub
-(in-toto-verify) RuleVerificationError: Rule 'DISALLOW *' failed, pattern matched disallowed artifacts: '['demo-project/foo.py']' 
+(in-toto-verify) RuleVerificationError: 'DISALLOW *' matched the following artifacts: ['demo-project/foo.py']
+Full trace for 'expected_materials' of item 'package':
+Available materials (used for queue):
+['demo-project/foo.py']
+Available products:
+['demo-project.tar.gz']
+Queue after 'MATCH demo-project/* WITH PRODUCTS FROM update-version':
+['demo-project/foo.py']
+
 + echo 1
 1
 """
