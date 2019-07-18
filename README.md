@@ -13,13 +13,13 @@ This is, you will perform the commands on behalf of Alice, Bob and Carl as well
 as the client who verifies the final product.
 
 
-### Download and setup in-toto on *NIX (Linux, OS X, ..)
+### Download and setup in-toto on \*NIX (Linux, OS X, ..)
 __Virtual Environments (optional)__
 
 We highly recommend to install `in-toto` and its dependencies in a [`virtualenv`](https://virtualenv.pypa.io/en/stable/). Just copy-paste the following snippet to install
 [`virtualenvwrapper`](https://virtualenvwrapper.readthedocs.io/en/latest/) and create a virtual environment:
 
-```shell
+```bash
 # Install virtualenvwrapper
 pip install virtualenvwrapper
 
@@ -35,7 +35,7 @@ mkvirtualenv in-toto-demo
 ```
 
 __Get demo files and install in-toto__
-```shell
+```bash
 # Fetch the demo repo using git
 git clone https://github.com/in-toto/demo.git
 
@@ -54,6 +54,7 @@ already have RSA keys in each of their directories. This is what you see:
 ```shell
 tree  # If you don't have tree, try 'find .' instead
 # the tree command gives you the following output
+# .
 # ├── README.md
 # ├── final_product
 # ├── functionary_bob
@@ -63,10 +64,12 @@ tree  # If you don't have tree, try 'find .' instead
 # │   ├── carl
 # │   └── carl.pub
 # ├── owner_alice
-# │   ├── alice
-# │   ├── alice.pub
-# │   └── create_layout.py
-# └── run_demo.py
+# │   ├── alice
+# │   ├── alice.pub
+# │   └── create_layout.py
+# ├── requirements.txt
+# ├── run_demo.py
+# └── run_demo_md.py
 ```
 
 ### Define software supply chain layout (Alice)
@@ -124,9 +127,10 @@ in-toto-record start --step-name update-version --key bob --materials demo-proje
 
 Then Bob uses an editor of his choice to update the version number in `demo-project/foo.py`, e.g.:
 
-```python
-# In demo-project/foo.py
+```shell
+cat <<EOF > demo-project/foo.py
 VERSION = "foo-v1"
+EOF
 ```
 
 And finally he records the state of files after the modification and produces
@@ -204,7 +208,7 @@ Carl thought that this is the sane code he got from Bob and
 unwittingly packages the tampered version of foo.py
 
 ```shell
-in-toto-run --step-name package --materials demo-project/foo.py --products demo-project.tar.gz --key carl -- tar --exclude '.git' -zcvf demo-project.tar.gz demo-project
+in-toto-run --step-name package --materials demo-project/foo.py --products demo-project.tar.gz --key carl -- tar --exclude ".git" -zcvf demo-project.tar.gz demo-project
 ```
 and ships everything out as final product to the client:
 ```shell
@@ -237,7 +241,7 @@ and how to use it on [in-toto's Github page](https://in-toto.github.io/).
 ### Clean slate
 If you want to run the demo again, you can use the following script to remove all the files you created above.
 
-```shell
+```bash
 cd .. # You have to be the demo directory
 python run_demo.py -c
 ```
@@ -245,7 +249,7 @@ python run_demo.py -c
 ### Tired of copy-pasting commands?
 The same script can be used to sequentially execute all commands listed above. Just change into the `demo` directory, run `python run_demo.py` without flags and observe the output.
 
-```shell
+```bash
 # In the demo directory
 python run_demo.py
 ```
