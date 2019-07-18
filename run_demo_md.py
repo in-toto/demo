@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 <Program Name>
   run_demo_md.py
@@ -40,26 +39,7 @@ INSTRUCTIONS_FN = "README.md"
 SNIPPET_PATTERN = r"```shell\n([\s\S]*?)\n```"
 
 EXPECTED_STDOUT = \
-"""+ tree
-.
-├── README.md
-├── final_product
-├── functionary_bob
-│   ├── bob
-│   └── bob.pub
-├── functionary_carl
-│   ├── carl
-│   └── carl.pub
-├── owner_alice
-│   ├── alice
-│   ├── alice.pub
-│   └── create_layout.py
-├── requirements.txt
-├── run_demo.py
-└── run_demo_md.py
-
-4 directories, 11 files
-+ cd owner_alice
+"""+ cd owner_alice
 + python create_layout.py
 + cd ../functionary_bob
 + in-toto-run --step-name clone --products demo-project/foo.py --key bob -- git clone https://github.com/in-toto/demo-project.git
