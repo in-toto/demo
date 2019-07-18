@@ -57,7 +57,7 @@ EXPECTED_STDOUT = \
 + echo 0
 0
 + cd ../functionary_carl
-+ echo 'something evil'
++ echo something evil
 + in-toto-run --step-name package --materials demo-project/foo.py --products demo-project.tar.gz --key carl -- tar --exclude .git -zcvf demo-project.tar.gz demo-project
 + cd ..
 + cp owner_alice/root.layout functionary_bob/clone.776a00e2.link functionary_bob/update-version.776a00e2.link functionary_carl/package.2f89b927.link functionary_carl/demo-project.tar.gz final_product/

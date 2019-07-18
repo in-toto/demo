@@ -202,7 +202,7 @@ malicious code.
 
 ```shell
 cd ../functionary_carl
-echo "something evil" >> demo-project/foo.py
+echo something evil >> demo-project/foo.py
 ```
 Carl thought that this is the sane code he got from Bob and
 unwittingly packages the tampered version of foo.py
