@@ -96,8 +96,9 @@ try:
     readme = fp.read()
   snippets = re.findall(SNIPPET_PATTERN, readme)
 
-  # Create script from all snippets, use shell trace mode for detailed output
-  script = "set -x\n{}".format("\n".join(snippets))
+  # Create script from all snippets, with shell xtrace mode (set -x) for
+  # detailed output and make sure that it has the expected prefix (PS4='+ ')
+  script = "PS4='+ '\nset -x\n{}".format("\n".join(snippets))
 
   # Execute script in one shell so we can run commands like `cd`
   # NOTE: Would be nice to use `in_toto.process.run_duplicate_streams` to show
