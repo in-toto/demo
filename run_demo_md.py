@@ -68,6 +68,11 @@ EXPECTED_STDOUT = \
 1
 """
 
+# NOTE: Very ugly hack to make this work on Python 2
+if six.PY2:
+  EXPECTED_STDOUT = EXPECTED_STDOUT.replace("['", "[u'")
+
+
 # Setup a test directory with all necessary demo files and change into it. This
 # lets us easily clean up all the files created during the demo eventually.
 demo_dir = os.path.dirname(os.path.realpath(__file__))
