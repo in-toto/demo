@@ -6,16 +6,21 @@ import argparse
 import time
 from shutil import copyfile, copytree, rmtree
 
+try:
+  input = raw_input
+except NameError:
+  pass
+
 NO_PROMPT = False
 
 def prompt_key(prompt):
   if NO_PROMPT:
-    print "\n" + prompt
+    print("\n" + prompt)
     return
   inp = False
   while inp != "":
     try:
-      inp = raw_input("\n{} -- press any key to continue".format(prompt))
+      inp = input("\n{} -- press any key to continue".format(prompt))
     except Exception:
       pass
 
@@ -24,38 +29,41 @@ def supply_chain():
   prompt_key("Define supply chain layout (Alice)")
   os.chdir("owner_alice")
   create_layout_cmd = "python create_layout.py"
-  print create_layout_cmd
+  print(create_layout_cmd)
   subprocess.call(shlex.split(create_layout_cmd))
 
   prompt_key("Clone source code (Bob)")
   os.chdir("../functionary_bob")
   clone_cmd = ("in-toto-run"
+                    " --verbose"
                     " --step-name clone --products demo-project/foo.py"
                     " --key bob -- git clone https://github.com/in-toto/demo-project.git")
-  print clone_cmd
+  print(clone_cmd)
   subprocess.call(shlex.split(clone_cmd))
 
   prompt_key("Update version number (Bob)")
   update_version_start_cmd = ("in-toto-record"
                     " start"
+                    " --verbose"
                     " --step-name update-version"
                     " --key bob"
                     " --materials demo-project/foo.py")
 
-  print update_version_start_cmd
+  print(update_version_start_cmd)
   subprocess.call(shlex.split(update_version_start_cmd))
 
   update_version = "echo 'VERSION = \"foo-v1\"\n\nprint(\"Hello in-toto\")\n' > demo-project/foo.py"
-  print update_version
+  print(update_version)
   subprocess.call(update_version, shell=True)
 
   update_version_stop_cmd = ("in-toto-record"
                     " stop"
+                    " --verbose"
                     " --step-name update-version"
                     " --key bob"
                     " --products demo-project/foo.py")
 
-  print update_version_stop_cmd
+  print(update_version_stop_cmd)
   subprocess.call(shlex.split(update_version_stop_cmd))
 
   copytree("demo-project", "../functionary_carl/demo-project")
@@ -63,11 +71,12 @@ def supply_chain():
   prompt_key("Package (Carl)")
   os.chdir("../functionary_carl")
   package_cmd = ("in-toto-run"
+                 " --verbose"
                  " --step-name package --materials demo-project/foo.py"
                  " --products demo-project.tar.gz"
                  " --key carl --record-streams"
                  " -- tar --exclude '.git' -zcvf demo-project.tar.gz demo-project")
-  print package_cmd
+  print(package_cmd)
   subprocess.call(shlex.split(package_cmd))
 
 
@@ -84,12 +93,12 @@ def supply_chain():
   os.chdir("final_product")
   copyfile("../owner_alice/alice.pub", "alice.pub")
   verify_cmd = ("in-toto-verify"
+                " --verbose"
                 " --layout root.layout"
                 " --layout-key alice.pub")
-  print verify_cmd
+  print(verify_cmd)
   retval = subprocess.call(shlex.split(verify_cmd))
-  print "Return value: " + str(retval)
-
+  print("Return value: " + str(retval))
 
 
 
@@ -97,17 +106,18 @@ def supply_chain():
   prompt_key("Tampering with the supply chain")
   os.chdir("../functionary_carl")
   tamper_cmd = "echo 'something evil' >> demo-project/foo.py"
-  print tamper_cmd
+  print(tamper_cmd)
   subprocess.call(tamper_cmd, shell=True)
 
 
   prompt_key("Package (Carl)")
   package_cmd = ("in-toto-run"
+                 " --verbose"
                  " --step-name package --materials demo-project/foo.py"
                  " --products demo-project.tar.gz"
                  " --key carl --record-streams"
                  " -- tar --exclude '.git' -zcvf demo-project.tar.gz demo-project")
-  print package_cmd
+  print(package_cmd)
   subprocess.call(shlex.split(package_cmd))
 
 
@@ -124,12 +134,13 @@ def supply_chain():
   os.chdir("final_product")
   copyfile("../owner_alice/alice.pub", "alice.pub")
   verify_cmd = ("in-toto-verify"
+                " --verbose"
                 " --layout root.layout"
                 " --layout-key alice.pub")
 
-  print verify_cmd
+  print(verify_cmd)
   retval = subprocess.call(shlex.split(verify_cmd))
-  print "Return value: " + str(retval)
+  print("Return value: " + str(retval))
 
 
 def main():
