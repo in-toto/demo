@@ -24,6 +24,7 @@
 import os
 import re
 import shutil
+import sys
 import tempfile
 import six
 
@@ -108,6 +109,15 @@ try:
       stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
       universal_newlines=True)
   stdout, _ = proc.communicate()
+
+  # NOTE: Ugly hack to filter deprecation warnings from output on EOLed versions
+  if sys.version_info < (3, 6):
+    stdout_filtered_list = []
+    for line in stdout.split("\n"):
+      if ("import cryptography.exceptions" not in line and
+          "CryptographyDeprecationWarning" not in line):
+        stdout_filtered_list.append(line)
+    stdout = "\n".join(stdout_filtered_list)
 
   # Fail if the output is not what we expected
   if stdout != EXPECTED_STDOUT:
