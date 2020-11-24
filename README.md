@@ -45,8 +45,10 @@ cd demo
 # Install a compatible version of in-toto
 pip install -r requirements.txt
 ```
-*Note: If you are having troubles installing in-toto, make sure you have
-all the [dependencies installed on your system](https://github.com/in-toto/in-toto#install-dependencies).*
+*Note: If you are having troubles installing in-toto, make sure you have all
+the system dependencies. See the [installation guide on
+in-toto.readthedocs.io](https://in-toto.readthedocs.io/en/latest/installing.html)
+for details.*
 
 Inside the demo directory you will find four directories: `owner_alice`,
 `functionary_bob`, `functionary_carl` and `final_product`. Alice, Bob and Carl
