@@ -27,6 +27,7 @@ import shutil
 import sys
 import tempfile
 import six
+import difflib
 
 if six.PY2:
   import subprocess32 as subprocess
@@ -121,9 +122,12 @@ try:
 
   # Fail if the output is not what we expected
   if stdout != EXPECTED_STDOUT:
+    difflist = list(difflib.Differ().compare(
+        EXPECTED_STDOUT.splitlines(),
+        stdout.splitlines()))
     raise SystemExit(
-        "#### EXPECTED:\n-\n{}\n-\n#### GOT:\n-\n{}\n-\nDemo test failed due "
-        "to unexpected output (see above). :(".format(EXPECTED_STDOUT, stdout))
+        "#### DIFFERENCE:\n\n{}\n\nDemo test failed due to unexpected output "
+        "(see above). :(".format("\n".join(difflist)))
 
   print("{}\nDemo test ran as expected. :)".format(stdout))
 
