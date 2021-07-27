@@ -13,25 +13,24 @@ This is, you will perform the commands on behalf of Alice, Bob and Carl as well
 as the client who verifies the final product.
 
 
-### Download and setup in-toto on \*NIX (Linux, OS X, ..)
+## Download and setup in-toto on \*NIX (Linux, OS X, ..)
 __Virtual Environments (optional)__
 
-We highly recommend to install `in-toto` and its dependencies in a [`virtualenv`](https://virtualenv.pypa.io/en/stable/). Just copy-paste the following snippet to install
-[`virtualenvwrapper`](https://virtualenvwrapper.readthedocs.io/en/latest/) and create a virtual environment:
+We highly recommend installing `in-toto` and its dependencies in a
+[`venv`](https://docs.python.org/3/library/venv.html) Python virtual
+environment. Just copy-paste the following snippet to create a virtual
+environment:
 
 ```bash
-# Install virtualenvwrapper
-pip install virtualenvwrapper
+# Create the virtual environment
+python -m venv in-toto-demo
 
-# Create directory for your virtualenvs, default is
-mkdir -p ~/.virtualenvs
-
-# Source the scripts (you may want to add this to your shell startup file)
-source /usr/local/bin/virtualenvwrapper.sh
-
-# Create and change into a virtual environment, e.g. "in-toto-demo"
-# This will add the prefix "(in-toto-demo)" to your shell prompt
+# Change directory into the virtual environment, e.g. "in-toto-demo"
 mkvirtualenv in-toto-demo
+
+# Activate the virtual environment
+# This will add the prefix "(in-toto-demo)" to your shell prompt
+source in-toto-demo/bin/activate
 ```
 
 __Get demo files and install in-toto__
@@ -73,6 +72,10 @@ tree  # If you don't have tree, try 'find .' instead
 # ├── run_demo.py
 # └── run_demo_md.py
 ```
+
+## Run the demo commands
+Note: if you don't want to type or copy & paste commands and would rather watch 
+a script run through the commands, jump to [the last section of this document](#tired-of-copy-pasting-commands)
 
 ### Define software supply chain layout (Alice)
 First, we will need to define the software supply chain layout. To simplify this
@@ -130,9 +133,7 @@ in-toto-record start --step-name update-version --key bob --materials demo-proje
 Then Bob uses an editor of his choice to update the version number in `demo-project/foo.py`, e.g.:
 
 ```shell
-cat <<EOF > demo-project/foo.py
-VERSION = "foo-v1"
-EOF
+sed -i 's/v0/v1/' demo-project/foo.py
 ```
 
 And finally he records the state of files after the modification and produces
@@ -240,6 +241,7 @@ supply chain. More complex software supply chains that contain more steps can be
 created in a similar way. You can read more about what in-toto protects against
 and how to use it on [in-toto's Github page](https://in-toto.github.io/).
 
+## Cleaning up and automated run through
 ### Clean slate
 If you want to run the demo again, you can use the following script to remove all the files you created above.
 
