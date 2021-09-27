@@ -90,6 +90,7 @@ def main():
   # Sign and dump layout to "root.layout"
   metadata.sign(key_alice)
   metadata.dump("root.layout")
+  print('Created demo in-toto layout as "root.layout".')
 
 if __name__ == '__main__':
   main()
