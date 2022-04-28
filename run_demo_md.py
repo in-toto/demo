@@ -43,10 +43,12 @@ SNIPPET_PATTERN = r"```shell\n([\s\S]*?)\n```"
 EXPECTED_STDOUT = \
 """+ cd owner_alice
 + python create_layout.py
+Created demo in-toto layout as "root.layout".
 + cd ../functionary_bob
 + in-toto-run --step-name clone --products demo-project/foo.py --key bob -- git clone https://github.com/in-toto/demo-project.git
 + in-toto-record start --step-name update-version --key bob --materials demo-project/foo.py
-+ cat
++ sed -i.bak s/v0/v1/ demo-project/foo.py
++ rm demo-project/foo.py.bak
 + in-toto-record stop --step-name update-version --key bob --products demo-project/foo.py
 + cp -r demo-project ../functionary_carl/
 + cd ../functionary_carl
