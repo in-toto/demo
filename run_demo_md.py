@@ -26,13 +26,8 @@ import re
 import shutil
 import sys
 import tempfile
-import six
 import difflib
-
-if six.PY2:
-  import subprocess32 as subprocess
-else:
-  import subprocess
+import subprocess
 
 # The file pointed to by `INSTRUCTIONS_FN` contains `shell` code snippets that
 # may be extracted using the regex defined in `SNIPPET_PATTERN`, and executed
@@ -43,10 +38,12 @@ SNIPPET_PATTERN = r"```shell\n([\s\S]*?)\n```"
 EXPECTED_STDOUT = \
 """+ cd owner_alice
 + python create_layout.py
+Created demo in-toto layout as "root.layout".
 + cd ../functionary_bob
 + in-toto-run --step-name clone --products demo-project/foo.py --key bob -- git clone https://github.com/in-toto/demo-project.git
 + in-toto-record start --step-name update-version --key bob --materials demo-project/foo.py
-+ cat
++ sed -i.bak s/v0/v1/ demo-project/foo.py
++ rm demo-project/foo.py.bak
 + in-toto-record stop --step-name update-version --key bob --products demo-project/foo.py
 + cp -r demo-project ../functionary_carl/
 + cd ../functionary_carl
@@ -78,11 +75,6 @@ Queue after 'MATCH demo-project/* WITH PRODUCTS FROM update-version':
 1
 """
 
-# NOTE: Very ugly hack to make this work on Python 2
-if six.PY2:
-  EXPECTED_STDOUT = EXPECTED_STDOUT.replace("['", "[u'")
-
-
 # Setup a test directory with all necessary demo files and change into it. This
 # lets us easily clean up all the files created during the demo eventually.
 demo_dir = os.path.dirname(os.path.realpath(__file__))
@@ -110,15 +102,6 @@ try:
       stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
       universal_newlines=True)
   stdout, _ = proc.communicate()
-
-  # NOTE: Ugly hack to filter deprecation warnings from output on EOLed versions
-  if sys.version_info < (3, 6):
-    stdout_filtered_list = []
-    for line in stdout.split("\n"):
-      if ("import cryptography.exceptions" not in line and
-          "CryptographyDeprecationWarning" not in line):
-        stdout_filtered_list.append(line)
-    stdout = "\n".join(stdout_filtered_list)
 
   # Fail if the output is not what we expected
   if stdout != EXPECTED_STDOUT:

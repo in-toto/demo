@@ -25,9 +25,6 @@ environment:
 # Create the virtual environment
 python -m venv in-toto-demo
 
-# Change directory into the virtual environment, e.g. "in-toto-demo"
-mkvirtualenv in-toto-demo
-
 # Activate the virtual environment
 # This will add the prefix "(in-toto-demo)" to your shell prompt
 source in-toto-demo/bin/activate
@@ -65,16 +62,16 @@ tree  # If you don't have tree, try 'find .' instead
 # │   ├── carl
 # │   └── carl.pub
 # ├── owner_alice
-# │   ├── alice
-# │   ├── alice.pub
-# │   └── create_layout.py
+# │   ├── alice
+# │   ├── alice.pub
+# │   └── create_layout.py
 # ├── requirements.txt
 # ├── run_demo.py
 # └── run_demo_md.py
 ```
 
 ## Run the demo commands
-Note: if you don't want to type or copy & paste commands and would rather watch 
+Note: if you don't want to type or copy & paste commands and would rather watch
 a script run through the commands, jump to [the last section of this document](#tired-of-copy-pasting-commands)
 
 ### Define software supply chain layout (Alice)
@@ -133,7 +130,7 @@ in-toto-record start --step-name update-version --key bob --materials demo-proje
 Then Bob uses an editor of his choice to update the version number in `demo-project/foo.py`, e.g.:
 
 ```shell
-sed -i 's/v0/v1/' demo-project/foo.py
+sed -i.bak 's/v0/v1/' demo-project/foo.py && rm demo-project/foo.py.bak
 ```
 
 And finally he records the state of files after the modification and produces

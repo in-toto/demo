@@ -6,11 +6,6 @@ import argparse
 import time
 from shutil import copyfile, copytree, rmtree
 
-try:
-  input = raw_input
-except NameError:
-  pass
-
 NO_PROMPT = False
 
 def prompt_key(prompt):

@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.7', '3.8', '3.9', '3.10']
+        os: [ubuntu-latest, macos-latest]
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout demo
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@0ebf233433c08fb9061af664d501c3f3ff0e9e20
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+          cache-dependency-path: 'requirements.txt'
+
+      - name: Install dependencies
+        run: |
+          python3 -m pip install -U pip
+          python3 -m pip install -r requirements.txt
+
+      - name: Run demo
+        run: |
+          python3 run_demo_md.py
