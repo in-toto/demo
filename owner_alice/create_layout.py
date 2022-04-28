@@ -31,7 +31,7 @@ def main():
           "name": "update-version",
           "expected_materials": [["MATCH", "demo-project/*", "WITH", "PRODUCTS",
                                 "FROM", "clone"], ["DISALLOW", "*"]],
-          "expected_products": [["ALLOW", "demo-project/foo.py"], ["DISALLOW", "*"]],
+          "expected_products": [["MODIFY", "demo-project/foo.py"], ["DISALLOW", "*"]],
           "pubkeys": [key_bob["keyid"]],
           "expected_command": [],
           "threshold": 1,
