@@ -1,4 +1,4 @@
-# in-toto demo [![Build Status](https://travis-ci.com/in-toto/demo.svg?branch=master)](https://travis-ci.com/in-toto/demo)
+# in-toto demo [![CI](https://github.com/in-toto/demo/actions/workflows/ci.yml/badge.svg)](https://github.com/in-toto/demo/actions/workflows/ci.yml)
 
 In this demo, we will use in-toto to secure a software supply chain with a very
 simple workflow.  Bob is a developer for a project, Carl packages the software, and
