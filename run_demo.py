@@ -31,6 +31,7 @@ def supply_chain():
   os.chdir("../functionary_bob")
   clone_cmd = ("in-toto-run"
                     " --verbose"
+                    " --use-dsse"
                     " --step-name clone --products demo-project/foo.py"
                     " --key bob -- git clone https://github.com/in-toto/demo-project.git")
   print(clone_cmd)
@@ -40,6 +41,7 @@ def supply_chain():
   update_version_start_cmd = ("in-toto-record"
                     " start"
                     " --verbose"
+                    " --use-dsse"
                     " --step-name update-version"
                     " --key bob"
                     " --materials demo-project/foo.py")
@@ -54,6 +56,7 @@ def supply_chain():
   update_version_stop_cmd = ("in-toto-record"
                     " stop"
                     " --verbose"
+                    " --use-dsse"
                     " --step-name update-version"
                     " --key bob"
                     " --products demo-project/foo.py")
@@ -67,6 +70,7 @@ def supply_chain():
   os.chdir("../functionary_carl")
   package_cmd = ("in-toto-run"
                  " --verbose"
+                 " --use-dsse"
                  " --step-name package --materials demo-project/foo.py"
                  " --products demo-project.tar.gz"
                  " --key carl --record-streams"
@@ -108,6 +112,7 @@ def supply_chain():
   prompt_key("Package (Carl)")
   package_cmd = ("in-toto-run"
                  " --verbose"
+                 " --use-dsse"
                  " --step-name package --materials demo-project/foo.py"
                  " --products demo-project.tar.gz"
                  " --key carl --record-streams"
