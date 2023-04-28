@@ -40,14 +40,14 @@ EXPECTED_STDOUT = \
 + python create_layout.py
 Created demo in-toto layout as "root.layout".
 + cd ../functionary_bob
-+ in-toto-run --step-name clone --products demo-project/foo.py --key bob -- git clone https://github.com/in-toto/demo-project.git
-+ in-toto-record start --step-name update-version --key bob --materials demo-project/foo.py
++ in-toto-run --step-name clone --use-dsse --products demo-project/foo.py --key bob -- git clone https://github.com/in-toto/demo-project.git
++ in-toto-record start --step-name update-version --use-dsse --key bob --materials demo-project/foo.py
 + sed -i.bak s/v0/v1/ demo-project/foo.py
 + rm demo-project/foo.py.bak
-+ in-toto-record stop --step-name update-version --key bob --products demo-project/foo.py
++ in-toto-record stop --step-name update-version --use-dsse --key bob --products demo-project/foo.py
 + cp -r demo-project ../functionary_carl/
 + cd ../functionary_carl
-+ in-toto-run --step-name package --materials demo-project/foo.py --products demo-project.tar.gz --key carl -- tar --exclude .git -zcvf demo-project.tar.gz demo-project
++ in-toto-run --step-name package --use-dsse --materials demo-project/foo.py --products demo-project.tar.gz --key carl -- tar --exclude .git -zcvf demo-project.tar.gz demo-project
 + cd ..
 + cp owner_alice/root.layout functionary_bob/clone.776a00e2.link functionary_bob/update-version.776a00e2.link functionary_carl/package.2f89b927.link functionary_carl/demo-project.tar.gz final_product/
 + cd final_product
@@ -57,7 +57,7 @@ Created demo in-toto layout as "root.layout".
 0
 + cd ../functionary_carl
 + echo something evil
-+ in-toto-run --step-name package --materials demo-project/foo.py --products demo-project.tar.gz --key carl -- tar --exclude .git -zcvf demo-project.tar.gz demo-project
++ in-toto-run --step-name package --use-dsse --materials demo-project/foo.py --products demo-project.tar.gz --key carl -- tar --exclude .git -zcvf demo-project.tar.gz demo-project
 + cd ..
 + cp owner_alice/root.layout functionary_bob/clone.776a00e2.link functionary_bob/update-version.776a00e2.link functionary_carl/package.2f89b927.link functionary_carl/demo-project.tar.gz final_product/
 + cd final_product
