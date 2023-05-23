@@ -67,6 +67,7 @@ def main():
               ["ALLOW", ".keep"],
               ["ALLOW", "alice.pub"],
               ["ALLOW", "root.layout"],
+              ["ALLOW", "*.link"],
               ["DISALLOW", "*"]
           ],
           "expected_products": [
@@ -77,6 +78,7 @@ def main():
               ["ALLOW", ".keep"],
               ["ALLOW", "alice.pub"],
               ["ALLOW", "root.layout"],
+              ["ALLOW", "*.link"],
               ["DISALLOW", "*"]
           ],
           "run": [
