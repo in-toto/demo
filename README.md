@@ -106,7 +106,7 @@ directory and perform the step.
 
 ```shell
 cd ../functionary_bob
-in-toto-run --step-name clone --use-dsse --products demo-project/foo.py --key bob -- git clone https://github.com/in-toto/demo-project.git
+in-toto-run --step-name clone --use-dsse --products demo-project/foo.py --signing-key bob -- git clone https://github.com/in-toto/demo-project.git
 ```
 
 Here is what happens behind the scenes:
@@ -124,7 +124,7 @@ So first Bob records the state of the files he will modify:
 
 ```shell
 # In functionary_bob directory
-in-toto-record start --step-name update-version --use-dsse --key bob --materials demo-project/foo.py
+in-toto-record start --step-name update-version --use-dsse --signing-key bob --materials demo-project/foo.py
 ```
 
 Then Bob uses an editor of his choice to update the version number in `demo-project/foo.py`, e.g.:
@@ -137,7 +137,7 @@ And finally he records the state of files after the modification and produces
 a link metadata file called `update-version.[Bob's keyid].link`.
 ```shell
 # In functionary_bob directory
-in-toto-record stop --step-name update-version --use-dsse --key bob --products demo-project/foo.py
+in-toto-record stop --step-name update-version --use-dsse --signing-key bob --products demo-project/foo.py
 ```
 
 Bob has done his work and can send over the sources to Carl, who will create
@@ -154,7 +154,7 @@ to change to Carl's directory and create a package of the software project
 
 ```shell
 cd ../functionary_carl
-in-toto-run --step-name package --use-dsse --materials demo-project/foo.py --products demo-project.tar.gz --key carl -- tar --exclude ".git" -zcvf demo-project.tar.gz demo-project
+in-toto-run --step-name package --use-dsse --materials demo-project/foo.py --products demo-project.tar.gz --signing-key carl -- tar --exclude ".git" -zcvf demo-project.tar.gz demo-project
 ```
 
 This will create another step link metadata file, called `package.[Carl's keyid].link`.
