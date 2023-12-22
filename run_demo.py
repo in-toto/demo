@@ -33,7 +33,7 @@ def supply_chain():
                     " --verbose"
                     " --use-dsse"
                     " --step-name clone --products demo-project/foo.py"
-                    " --key bob -- git clone https://github.com/in-toto/demo-project.git")
+                    " --signing-key bob -- git clone https://github.com/in-toto/demo-project.git")
   print(clone_cmd)
   subprocess.call(shlex.split(clone_cmd))
 
@@ -43,7 +43,7 @@ def supply_chain():
                     " --verbose"
                     " --use-dsse"
                     " --step-name update-version"
-                    " --key bob"
+                    " --signing-key bob"
                     " --materials demo-project/foo.py")
 
   print(update_version_start_cmd)
@@ -58,7 +58,7 @@ def supply_chain():
                     " --verbose"
                     " --use-dsse"
                     " --step-name update-version"
-                    " --key bob"
+                    " --signing-key bob"
                     " --products demo-project/foo.py")
 
   print(update_version_stop_cmd)
@@ -73,7 +73,7 @@ def supply_chain():
                  " --use-dsse"
                  " --step-name package --materials demo-project/foo.py"
                  " --products demo-project.tar.gz"
-                 " --key carl --record-streams"
+                 " --signing-key carl --record-streams"
                  " -- tar --exclude '.git' -zcvf demo-project.tar.gz demo-project")
   print(package_cmd)
   subprocess.call(shlex.split(package_cmd))
@@ -115,7 +115,7 @@ def supply_chain():
                  " --use-dsse"
                  " --step-name package --materials demo-project/foo.py"
                  " --products demo-project.tar.gz"
-                 " --key carl --record-streams"
+                 " --signing-key carl --record-streams"
                  " -- tar --exclude '.git' -zcvf demo-project.tar.gz demo-project")
   print(package_cmd)
   subprocess.call(shlex.split(package_cmd))
