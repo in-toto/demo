@@ -41,27 +41,34 @@ EXPECTED_STDOUT = \
 Created demo in-toto layout as "root.layout".
 + cd ../functionary_bob
 + in-toto-run --step-name clone --use-dsse --products demo-project/foo.py --key bob -- git clone https://github.com/in-toto/demo-project.git
+'-k', '--key' is deprecated, use '--signing-key' instead.
 + in-toto-record start --step-name update-version --use-dsse --key bob --materials demo-project/foo.py
+'-k', '--key' is deprecated, use '--signing-key' instead.
 + sed -i.bak s/v0/v1/ demo-project/foo.py
 + rm demo-project/foo.py.bak
 + in-toto-record stop --step-name update-version --use-dsse --key bob --products demo-project/foo.py
+'-k', '--key' is deprecated, use '--signing-key' instead.
 + cp -r demo-project ../functionary_carl/
 + cd ../functionary_carl
 + in-toto-run --step-name package --use-dsse --materials demo-project/foo.py --products demo-project.tar.gz --key carl -- tar --exclude .git -zcvf demo-project.tar.gz demo-project
+'-k', '--key' is deprecated, use '--signing-key' instead.
 + cd ..
 + cp owner_alice/root.layout functionary_bob/clone.776a00e2.link functionary_bob/update-version.776a00e2.link functionary_carl/package.2f89b927.link functionary_carl/demo-project.tar.gz final_product/
 + cd final_product
 + cp ../owner_alice/alice.pub .
 + in-toto-verify --layout root.layout --layout-key alice.pub
+'-k', '--layout-keys' is deprecated, use '--verification-keys' instead.
 + echo 0
 0
 + cd ../functionary_carl
 + echo something evil
 + in-toto-run --step-name package --use-dsse --materials demo-project/foo.py --products demo-project.tar.gz --key carl -- tar --exclude .git -zcvf demo-project.tar.gz demo-project
+'-k', '--key' is deprecated, use '--signing-key' instead.
 + cd ..
 + cp owner_alice/root.layout functionary_bob/clone.776a00e2.link functionary_bob/update-version.776a00e2.link functionary_carl/package.2f89b927.link functionary_carl/demo-project.tar.gz final_product/
 + cd final_product
 + in-toto-verify --layout root.layout --layout-key alice.pub
+'-k', '--layout-keys' is deprecated, use '--verification-keys' instead.
 (in-toto-verify) RuleVerificationError: 'DISALLOW *' matched the following artifacts: ['demo-project/foo.py']
 Full trace for 'expected_materials' of item 'package':
 Available materials (used for queue):
@@ -102,6 +109,8 @@ try:
       stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
       universal_newlines=True)
   stdout, _ = proc.communicate()
+
+  print(stdout)
 
   # Fail if the output is not what we expected
   if stdout != EXPECTED_STDOUT:
