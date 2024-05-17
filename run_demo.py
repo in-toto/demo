@@ -33,7 +33,7 @@ def supply_chain():
                     " --verbose"
                     " --use-dsse"
                     " --step-name clone --products demo-project/foo.py"
-                    " --signing-key bob -- git clone https://github.com/in-toto/demo-project.git")
+                    " --key bob -- git clone https://github.com/in-toto/demo-project.git")
   print(clone_cmd)
   subprocess.call(shlex.split(clone_cmd))
 
@@ -43,7 +43,7 @@ def supply_chain():
                     " --verbose"
                     " --use-dsse"
                     " --step-name update-version"
-                    " --signing-key bob"
+                    " --key bob"
                     " --materials demo-project/foo.py")
 
   print(update_version_start_cmd)
@@ -58,7 +58,7 @@ def supply_chain():
                     " --verbose"
                     " --use-dsse"
                     " --step-name update-version"
-                    " --signing-key bob"
+                    " --key bob"
                     " --products demo-project/foo.py")
 
   print(update_version_stop_cmd)
@@ -73,7 +73,7 @@ def supply_chain():
                  " --use-dsse"
                  " --step-name package --materials demo-project/foo.py"
                  " --products demo-project.tar.gz"
-                 " --signing-key carl --record-streams"
+                 " --key carl --record-streams"
                  " -- tar --exclude '.git' -zcvf demo-project.tar.gz demo-project")
   print(package_cmd)
   subprocess.call(shlex.split(package_cmd))
@@ -94,7 +94,7 @@ def supply_chain():
   verify_cmd = ("in-toto-verify"
                 " --verbose"
                 " --layout root.layout"
-                " --verification-keys alice.pub")
+                " --layout-key alice.pub")
   print(verify_cmd)
   retval = subprocess.call(shlex.split(verify_cmd))
   print("Return value: " + str(retval))
@@ -115,7 +115,7 @@ def supply_chain():
                  " --use-dsse"
                  " --step-name package --materials demo-project/foo.py"
                  " --products demo-project.tar.gz"
-                 " --signing-key carl --record-streams"
+                 " --key carl --record-streams"
                  " -- tar --exclude '.git' -zcvf demo-project.tar.gz demo-project")
   print(package_cmd)
   subprocess.call(shlex.split(package_cmd))
@@ -136,7 +136,7 @@ def supply_chain():
   verify_cmd = ("in-toto-verify"
                 " --verbose"
                 " --layout root.layout"
-                " --verification-keys alice.pub")
+                " --layout-key alice.pub")
 
   print(verify_cmd)
   retval = subprocess.call(shlex.split(verify_cmd))
