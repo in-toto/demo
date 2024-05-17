@@ -3,6 +3,24 @@ from cryptography.hazmat.primitives.serialization import  load_pem_public_key
 from securesystemslib.signer import CryptoSigner
 from in_toto.models.layout import Layout
 from in_toto.models.metadata import Envelope
+from securesystemslib.signer import SSlibKey
+from typing import Dict, Any
+
+def _load_public_key_from_file(path: str) -> Dict[str, Any]:
+    """Internal helper to load key from SubjectPublicKeyInfo/PEM file."""
+    with open(path, "rb") as f:
+        data = f.read()
+
+    crypto_public_key = load_pem_public_key(data)
+    key = SSlibKey.from_crypto(crypto_public_key)
+
+    # Create a key_dict, which is accepted by `verifylib.in_toto_verify` or `Metablock.verify_signature`
+    # NOTE: securesystemslib and in-toto key dicts differ:
+    # the former don't include the keyid, which the latter require
+    key_dict = key.to_dict()
+    key_dict["keyid"] = key.keyid
+
+    return key_dict
 
 def main():
   # Load Alice's private key to later sign the layout
@@ -13,11 +31,8 @@ def main():
   # Fetch and load Bob's and Carl's public keys
   # to specify that they are authorized to perform certain step in the layout
   # https://github.com/in-toto/in-toto/issues/663
-  with open("../functionary_bob/bob.pub", "rb") as f:
-    key_bob  = load_pem_public_key(f.read(), None)
-
-  with open("../functionary_carl/carl.pub", "rb") as f:
-    key_carl  = load_pem_public_key(f.read(), None)  
+  key_bob  = _load_public_key_from_file("../functionary_bob/bob.pub")
+  key_carl  = _load_public_key_from_file("../functionary_carl/carl.pub")  
 
 
   layout = Layout.read({
