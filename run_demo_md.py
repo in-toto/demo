@@ -10,15 +10,15 @@
 
 <Purpose>
   Provides a script that extracts the demo code snippets from README.md and
-  runs them in a shell, raising SystemExit, if the output is not as expected.
+  runs them in a shell, raising `SystemExit`, if the output is not as expected.
 
   virtualenv setup and installation of in-toto, as described in the demo
   instructions, is not performed by this script and must be done before running
   it. Snippets are run in a temporary directory, which is removed afterwards.
 
-  NOTE: Currently, the script runs all snippets marked as shell snippets (see
-  SNIPPET_PATTERN). To exclude a snippet from execution it must be marked as
-  something else (e.g. bash to get the same syntax highlighting).
+  NOTE: Currently, the script runs all snippets marked as `shell` snippets (see
+  `SNIPPET_PATTERN`). To exclude a snippet from execution it must be marked as
+  something else (e.g. `bash` to get the same syntax highlighting).
 
 """
 import os
@@ -29,11 +29,11 @@ import tempfile
 import difflib
 import subprocess
 
-# The file pointed to by INSTRUCTIONS_FN contains shell code snippets that
-# may be extracted using the regex defined in SNIPPET_PATTERN, and executed
-# to generate a combined stdout/stderr equal to EXPECTED_STDOUT.
+# The file pointed to by `INSTRUCTIONS_FN` contains `shell` code snippets that
+# may be extracted using the regex defined in `SNIPPET_PATTERN`, and executed
+# to generate a combined stdout/stderr equal to `EXPECTED_STDOUT`.
 INSTRUCTIONS_FN = "README.md"
-SNIPPET_PATTERN = r"shell\n([\s\S]*?)\n"
+SNIPPET_PATTERN = r"```shell\n([\s\S]*?)\n```"
 
 EXPECTED_STDOUT = \
 """+ cd owner_alice
@@ -77,7 +77,7 @@ Queue after 'MATCH demo-project/* WITH PRODUCTS FROM update-version':
 
 # Setup a test directory with all necessary demo files and change into it. This
 # lets us easily clean up all the files created during the demo eventually.
-demo_dir = os.path.dirname(os.path.realpath(_file_))
+demo_dir = os.path.dirname(os.path.realpath(__file__))
 tmp_dir = os.path.realpath(tempfile.mkdtemp())
 test_dir = os.path.join(tmp_dir, os.path.basename(demo_dir))
 shutil.copytree(demo_dir, test_dir)
@@ -94,8 +94,8 @@ try:
   # detailed output and make sure that it has the expected prefix (PS4='+ ')
   script = "PS4='+ '\nset -x\n{}".format("\n".join(snippets))
 
-  # Execute script in one shell so we can run commands like cd
-  # NOTE: Would be nice to use in_toto.process.run_duplicate_streams to show
+  # Execute script in one shell so we can run commands like `cd`
+  # NOTE: Would be nice to use `in_toto.process.run_duplicate_streams` to show
   # output in real time, but the method does not support the required kwargs.
   proc = subprocess.Popen(
       ["/bin/sh", "-c", script],
@@ -120,4 +120,3 @@ finally:
   # Change back to where we were in the beginning and tear down test directory
   os.chdir(demo_dir)
   shutil.rmtree(test_dir)
-  

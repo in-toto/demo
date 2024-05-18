@@ -4,7 +4,6 @@ from in_toto.models.layout import Layout
 from in_toto.models.metadata import Envelope
 # https://github.com/in-toto/in-toto/issues/663
 from in_toto.models._signer import load_public_key_from_file
-
 def main():
   # Load Alice's private key to later sign the layout
   with open("alice", "rb") as f:
@@ -15,7 +14,6 @@ def main():
   # to specify that they are authorized to perform certain step in the layout
   key_bob  = load_public_key_from_file("../functionary_bob/bob.pub")
   key_carl  = load_public_key_from_file("../functionary_carl/carl.pub")  
-
 
   layout = Layout.read({
       "_type": "layout",
