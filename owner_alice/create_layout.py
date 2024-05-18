@@ -2,6 +2,7 @@ from cryptography.hazmat.primitives.serialization import load_pem_private_key
 from securesystemslib.signer import CryptoSigner
 from in_toto.models.layout import Layout
 from in_toto.models.metadata import Envelope
+# https://github.com/in-toto/in-toto/issues/663
 from in_toto.models._signer import load_public_key_from_file
 
 def main():
@@ -12,7 +13,6 @@ def main():
   signer_alice = CryptoSigner(key_alice)
   # Fetch and load Bob's and Carl's public keys
   # to specify that they are authorized to perform certain step in the layout
-  # https://github.com/in-toto/in-toto/issues/663
   key_bob  = load_public_key_from_file("../functionary_bob/bob.pub")
   key_carl  = load_public_key_from_file("../functionary_carl/carl.pub")  
 

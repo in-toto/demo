@@ -33,7 +33,7 @@ def supply_chain():
                     " --verbose"
                     " --use-dsse"
                     " --step-name clone --products demo-project/foo.py"
-                    " --key bob -- git clone https://github.com/in-toto/demo-project.git")
+                    " --signing-key bob -- git clone https://github.com/in-toto/demo-project.git")
   print(clone_cmd)
   subprocess.call(shlex.split(clone_cmd))
 
@@ -43,7 +43,7 @@ def supply_chain():
                     " --verbose"
                     " --use-dsse"
                     " --step-name update-version"
-                    " --key bob"
+                    " --signing-key bob"
                     " --materials demo-project/foo.py")
 
   print(update_version_start_cmd)
@@ -58,7 +58,7 @@ def supply_chain():
                     " --verbose"
                     " --use-dsse"
                     " --step-name update-version"
-                    " --key bob"
+                    " --signing-key bob"
                     " --products demo-project/foo.py")
 
   print(update_version_stop_cmd)
@@ -73,7 +73,7 @@ def supply_chain():
                  " --use-dsse"
                  " --step-name package --materials demo-project/foo.py"
                  " --products demo-project.tar.gz"
-                 " --key carl --record-streams"
+                 " --signing-key carl --record-streams"
                  " -- tar --exclude '.git' -zcvf demo-project.tar.gz demo-project")
   print(package_cmd)
   subprocess.call(shlex.split(package_cmd))
@@ -82,9 +82,9 @@ def supply_chain():
   prompt_key("Create final product")
   os.chdir("..")
   copyfile("owner_alice/root.layout", "final_product/root.layout")
-  copyfile("functionary_bob/clone.776a00e2.link", "final_product/clone.776a00e2.link")
-  copyfile("functionary_bob/update-version.776a00e2.link", "final_product/update-version.776a00e2.link")
-  copyfile("functionary_carl/package.2f89b927.link", "final_product/package.2f89b927.link")
+  copyfile("functionary_bob/clone.210dcc50.link", "final_product/clone.210dcc50.link")
+  copyfile("functionary_bob/update-version.210dcc50.link", "final_product/update-version.210dcc50.link")
+  copyfile("functionary_carl/package.be06db20.link", "final_product/package.be06db20.link")
   copyfile("functionary_carl/demo-project.tar.gz", "final_product/demo-project.tar.gz")
 
 
@@ -94,7 +94,7 @@ def supply_chain():
   verify_cmd = ("in-toto-verify"
                 " --verbose"
                 " --layout root.layout"
-                " --layout-key alice.pub")
+                " --verification-keys alice.pub")
   print(verify_cmd)
   retval = subprocess.call(shlex.split(verify_cmd))
   print("Return value: " + str(retval))
@@ -115,7 +115,7 @@ def supply_chain():
                  " --use-dsse"
                  " --step-name package --materials demo-project/foo.py"
                  " --products demo-project.tar.gz"
-                 " --key carl --record-streams"
+                 " --signing-key carl --record-streams"
                  " -- tar --exclude '.git' -zcvf demo-project.tar.gz demo-project")
   print(package_cmd)
   subprocess.call(shlex.split(package_cmd))
@@ -124,9 +124,9 @@ def supply_chain():
   prompt_key("Create final product")
   os.chdir("..")
   copyfile("owner_alice/root.layout", "final_product/root.layout")
-  copyfile("functionary_bob/clone.776a00e2.link", "final_product/clone.776a00e2.link")
-  copyfile("functionary_bob/update-version.776a00e2.link", "final_product/update-version.776a00e2.link")
-  copyfile("functionary_carl/package.2f89b927.link", "final_product/package.2f89b927.link")
+  copyfile("functionary_bob/clone.210dcc50.link", "final_product/clone.210dcc50.link")
+  copyfile("functionary_bob/update-version.210dcc50.link", "final_product/update-version.210dcc50.link")
+  copyfile("functionary_carl/package.be06db20.link", "final_product/package.be06db20.link")
   copyfile("functionary_carl/demo-project.tar.gz", "final_product/demo-project.tar.gz")
 
 
@@ -136,7 +136,7 @@ def supply_chain():
   verify_cmd = ("in-toto-verify"
                 " --verbose"
                 " --layout root.layout"
-                " --layout-key alice.pub")
+                " --verification-keys alice.pub")
 
   print(verify_cmd)
   retval = subprocess.call(shlex.split(verify_cmd))
@@ -154,17 +154,17 @@ def main():
   if args.clean:
     files_to_delete = [
       "owner_alice/root.layout",
-      "functionary_bob/clone.776a00e2.link",
-      "functionary_bob/update-version.776a00e2.link",
+      "functionary_bob/clone.210dcc50.link",
+      "functionary_bob/update-version.210dcc50.link",
       "functionary_bob/demo-project",
-      "functionary_carl/package.2f89b927.link",
+      "functionary_carl/package.be06db20.link",
       "functionary_carl/demo-project.tar.gz",
       "functionary_carl/demo-project",
       "final_product/alice.pub",
       "final_product/demo-project.tar.gz",
-      "final_product/package.2f89b927.link",
-      "final_product/clone.776a00e2.link",
-      "final_product/update-version.776a00e2.link",
+      "final_product/package.be06db20.link",
+      "final_product/clone.210dcc50.link",
+      "final_product/update-version.210dcc50.link",
       "final_product/untar.link",
       "final_product/root.layout",
       "final_product/demo-project",
@@ -184,5 +184,5 @@ def main():
 
   supply_chain()
 
-if __name__ == '__main__':
+if __name__ == '_main_':
   main()
