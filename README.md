@@ -106,7 +106,7 @@ directory and perform the step.
 
 ```shell
 cd ../functionary_bob
-in-toto-run --step-name clone --use-dsse --products demo-project/foo.py --key bob -- git clone https://github.com/in-toto/demo-project.git
+in-toto-run --step-name clone --use-dsse --products demo-project/foo.py --signing-key bob -- git clone https://github.com/in-toto/demo-project.git
 ```
 
 Here is what happens behind the scenes:
@@ -124,7 +124,7 @@ So first Bob records the state of the files he will modify:
 
 ```shell
 # In functionary_bob directory
-in-toto-record start --step-name update-version --use-dsse --key bob --materials demo-project/foo.py
+in-toto-record start --step-name update-version --use-dsse --signing-key bob --materials demo-project/foo.py
 ```
 
 Then Bob uses an editor of his choice to update the version number in `demo-project/foo.py`, e.g.:
@@ -137,7 +137,7 @@ And finally he records the state of files after the modification and produces
 a link metadata file called `update-version.[Bob's keyid].link`.
 ```shell
 # In functionary_bob directory
-in-toto-record stop --step-name update-version --use-dsse --key bob --products demo-project/foo.py
+in-toto-record stop --step-name update-version --use-dsse --signing-key bob --products demo-project/foo.py
 ```
 
 Bob has done his work and can send over the sources to Carl, who will create
@@ -154,7 +154,7 @@ to change to Carl's directory and create a package of the software project
 
 ```shell
 cd ../functionary_carl
-in-toto-run --step-name package --use-dsse --materials demo-project/foo.py --products demo-project.tar.gz --key carl -- tar --exclude ".git" -zcvf demo-project.tar.gz demo-project
+in-toto-run --step-name package --use-dsse --materials demo-project/foo.py --products demo-project.tar.gz --signing-key carl -- tar --exclude ".git" -zcvf demo-project.tar.gz demo-project
 ```
 
 This will create another step link metadata file, called `package.[Carl's keyid].link`.
@@ -167,7 +167,7 @@ our software package `demo-project.tar.gz` and the related metadata files `root.
 `clone.[Bob's keyid].link`, `update-version.[Bob's keyid].link` and `package.[Carl's keyid].link`:
 ```shell
 cd ..
-cp owner_alice/root.layout functionary_bob/clone.776a00e2.link functionary_bob/update-version.776a00e2.link functionary_carl/package.2f89b927.link functionary_carl/demo-project.tar.gz final_product/
+cp owner_alice/root.layout functionary_bob/clone.210dcc50.link functionary_bob/update-version.210dcc50.link functionary_carl/package.be06db20.link functionary_carl/demo-project.tar.gz final_product/
 ```
 And now run verification on behalf of the client:
 ```shell
@@ -175,7 +175,7 @@ cd final_product
 # Fetch Alice's public key from a trusted source to verify the layout signature
 # Note: The functionary public keys are fetched from the layout
 cp ../owner_alice/alice.pub .
-in-toto-verify --layout root.layout --layout-key alice.pub
+in-toto-verify --layout root.layout --verification-keys alice.pub
 ```
 This command will verify that
  1. the layout has not expired,
@@ -208,19 +208,19 @@ Carl thought that this is the genuine code he got from Bob and
 unwittingly packages the tampered version of foo.py
 
 ```shell
-in-toto-run --step-name package --use-dsse --materials demo-project/foo.py --products demo-project.tar.gz --key carl -- tar --exclude ".git" -zcvf demo-project.tar.gz demo-project
+in-toto-run --step-name package --use-dsse --materials demo-project/foo.py --products demo-project.tar.gz --signing-key carl -- tar --exclude ".git" -zcvf demo-project.tar.gz demo-project
 ```
 and ships everything out as final product to the client:
 ```shell
 cd ..
-cp owner_alice/root.layout functionary_bob/clone.776a00e2.link functionary_bob/update-version.776a00e2.link functionary_carl/package.2f89b927.link functionary_carl/demo-project.tar.gz final_product/
+cp owner_alice/root.layout functionary_bob/clone.210dcc50.link functionary_bob/update-version.210dcc50.link functionary_carl/package.be06db20.link functionary_carl/demo-project.tar.gz final_product/
 ```
 
 ### Verifying the malicious product
 
 ```shell
 cd final_product
-in-toto-verify --layout root.layout --layout-key alice.pub
+in-toto-verify --layout root.layout --verification-keys alice.pub
 ```
 This time, in-toto will detect that the product `foo.py` from Bob's `update-version`
 step was not used as material in Carl's `package` step (the verified hashes

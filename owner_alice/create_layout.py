@@ -1,16 +1,19 @@
-from securesystemslib import interface
-from securesystemslib.signer import SSlibSigner
+from cryptography.hazmat.primitives.serialization import load_pem_private_key
+from securesystemslib.signer import CryptoSigner
 from in_toto.models.layout import Layout
 from in_toto.models.metadata import Envelope
-
+# https://github.com/in-toto/in-toto/issues/663
+from in_toto.models._signer import load_public_key_from_file
 def main():
   # Load Alice's private key to later sign the layout
-  key_alice = interface.import_rsa_privatekey_from_file("alice")
-  signer_alice = SSlibSigner(key_alice)
+  with open("alice", "rb") as f:
+    key_alice = load_pem_private_key(f.read(), None)
+
+  signer_alice = CryptoSigner(key_alice)
   # Fetch and load Bob's and Carl's public keys
   # to specify that they are authorized to perform certain step in the layout
-  key_bob = interface.import_rsa_publickey_from_file("../functionary_bob/bob.pub")
-  key_carl = interface.import_rsa_publickey_from_file("../functionary_carl/carl.pub")
+  key_bob  = load_public_key_from_file("../functionary_bob/bob.pub")
+  key_carl  = load_public_key_from_file("../functionary_carl/carl.pub")  
 
   layout = Layout.read({
       "_type": "layout",
