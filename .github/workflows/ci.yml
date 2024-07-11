@@ -25,7 +25,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout demo
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
 
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@39cd14951b08e74b54015e9e001cdefcf80e669f
