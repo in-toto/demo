@@ -10,7 +10,7 @@ on:
       - main
       
 permissions:
-  contents: read    # Allows reading repository contents
+  contents: write    # Allows reading repository contents
   statuses: write   # Allows writing commit statuses
   
 jobs:
@@ -28,7 +28,15 @@ jobs:
       - name: Install dependencies
         run: |
           pip install black
-
-      - name: Run Black
+          
+      - name: Run Black to fix code formatting
         run: |
-          black --check .
+          black .  # This applies code formatting
+
+      - name: Commit changes (if any)
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git add .
+          git commit -m "Apply Black formatting" || echo "No changes to commit"
+          git push
