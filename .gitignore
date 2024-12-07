@@ -1,1 +1,6 @@
 *.swp
+
+.venv/
+functionary_bob/bob
+functionary_carl/carl
+owner_alice/alice
