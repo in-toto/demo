@@ -21,6 +21,7 @@
   something else (e.g. `bash` to get the same syntax highlighting).
 
 """
+
 import os
 import re
 import shutil
@@ -35,8 +36,7 @@ import subprocess
 INSTRUCTIONS_FN = "README.md"
 SNIPPET_PATTERN = r"```shell\n([\s\S]*?)\n```"
 
-EXPECTED_STDOUT = \
-"""+ cd owner_alice
+EXPECTED_STDOUT = """+ cd owner_alice
 + python create_layout.py
 Created demo in-toto layout as "root.layout".
 + cd ../functionary_bob
@@ -85,38 +85,41 @@ os.chdir(test_dir)
 
 # Wrap test code in try/finally to always tear down test directory and files
 try:
-  # Extract all shell code snippets from demo instructions
-  with open(INSTRUCTIONS_FN) as fp:
-    readme = fp.read()
-  snippets = re.findall(SNIPPET_PATTERN, readme)
+    # Extract all shell code snippets from demo instructions
+    with open(INSTRUCTIONS_FN) as fp:
+        readme = fp.read()
+    snippets = re.findall(SNIPPET_PATTERN, readme)
 
-  # Create script from all snippets, with shell xtrace mode (set -x) for
-  # detailed output and make sure that it has the expected prefix (PS4='+ ')
-  script = "PS4='+ '\nset -x\n{}".format("\n".join(snippets))
+    # Create script from all snippets, with shell xtrace mode (set -x) for
+    # detailed output and make sure that it has the expected prefix (PS4='+ ')
+    script = "PS4='+ '\nset -x\n{}".format("\n".join(snippets))
 
-  # Execute script in one shell so we can run commands like `cd`
-  # NOTE: Would be nice to use `in_toto.process.run_duplicate_streams` to show
-  # output in real time, but the method does not support the required kwargs.
-  proc = subprocess.Popen(
-      ["/bin/sh", "-c", script],
-      stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-      universal_newlines=True)
-  stdout, _ = proc.communicate()
+    # Execute script in one shell so we can run commands like `cd`
+    # NOTE: Would be nice to use `in_toto.process.run_duplicate_streams` to show
+    # output in real time, but the method does not support the required kwargs.
+    proc = subprocess.Popen(
+        ["/bin/sh", "-c", script],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        universal_newlines=True,
+    )
+    stdout, _ = proc.communicate()
 
-  print(stdout)
+    print(stdout)
 
-  # Fail if the output is not what we expected
-  if stdout != EXPECTED_STDOUT:
-    difflist = list(difflib.Differ().compare(
-        EXPECTED_STDOUT.splitlines(),
-        stdout.splitlines()))
-    raise SystemExit(
-        "#### DIFFERENCE:\n\n{}\n\nDemo test failed due to unexpected output "
-        "(see above). :(".format("\n".join(difflist)))
+    # Fail if the output is not what we expected
+    if stdout != EXPECTED_STDOUT:
+        difflist = list(
+            difflib.Differ().compare(EXPECTED_STDOUT.splitlines(), stdout.splitlines())
+        )
+        raise SystemExit(
+            "#### DIFFERENCE:\n\n{}\n\nDemo test failed due to unexpected output "
+            "(see above). :(".format("\n".join(difflist))
+        )
 
-  print("{}\nDemo test ran as expected. :)".format(stdout))
+    print("{}\nDemo test ran as expected. :)".format(stdout))
 
 finally:
-  # Change back to where we were in the beginning and tear down test directory
-  os.chdir(demo_dir)
-  shutil.rmtree(test_dir)
+    # Change back to where we were in the beginning and tear down test directory
+    os.chdir(demo_dir)
+    shutil.rmtree(test_dir)
