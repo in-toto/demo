@@ -1,2 +1,2 @@
 in-toto==3.0.0
-cryptography==44.0.3
+cryptography==45.0.2
